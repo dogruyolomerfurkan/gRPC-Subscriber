@@ -1,0 +1,22 @@
+﻿syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+option csharp_namespace = "gRPCSubscriber";
+
+service UserService {
+	rpc GetUserList (GetUserListRequest) returns (GetUserListResponse);
+}
+
+message GetUserListRequest {}
+
+message GetUserListResponse {
+	repeated GetUserListModel userList = 1;
+}
+
+message GetUserListModel {
+	int32 userId = 1;
+	string name = 2;
+	string surname = 3;
+	google.protobuf.Timestamp birthDate = 4;
+}
