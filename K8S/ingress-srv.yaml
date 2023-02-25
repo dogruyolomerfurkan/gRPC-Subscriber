@@ -1,0 +1,35 @@
+#kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.5.1/deploy/static/provider/cloud/deploy.yaml
+#apply this to ingress gateway
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-srv
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/use-regex: 'true'
+spec:
+  rules:
+    - host: acme.com
+      http:
+        paths:
+          - path: /k8example001
+            pathType: Prefix
+            backend:
+              service:
+                name: k8example001-clusterip-service
+                port:
+                  number: 80
+          - path: /grpcpublisher
+            pathType: Prefix
+            backend:
+              service:
+                name: grpcpublisher-clusterip-server
+                port:
+                  number: 80
+          - path: /grpcsubscriber
+            pathType: Prefix
+            backend:
+              service:
+                name: grpcsubscriber-clusterip-server
+                port:
+                  number: 80
