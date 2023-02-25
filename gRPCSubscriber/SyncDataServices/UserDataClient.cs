@@ -1,15 +1,20 @@
-﻿using Google.Protobuf.WellKnownTypes;
-using Grpc.Net.Client;
-using Mapster;
-using System.Collections.Generic;
+﻿using Grpc.Net.Client;
 
 namespace gRPCSubscriber.SyncDataServices
 {
     public class UserDataClient
     {
+        private readonly IConfiguration _configuration;
+
+        public UserDataClient(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
         public List<GetUserListModel> GetUserList()
         {
-            var channel = GrpcChannel.ForAddress("http://localhost:7500");
+            Console.WriteLine($"--> Calling GRPC Service {_configuration["GrpcPlatform"]}");
+            var channel = GrpcChannel.ForAddress(_configuration["GrpcPlatform"]!);
             var client = new UserService.UserServiceClient(channel);
             var request = new GetUserListRequest();
 
@@ -33,7 +38,7 @@ namespace gRPCSubscriber.SyncDataServices
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-                throw; 
+                throw;
             }
         }
     }

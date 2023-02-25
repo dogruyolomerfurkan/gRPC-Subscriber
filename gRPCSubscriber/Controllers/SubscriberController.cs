@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace gRPCSubscriber.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("grpcsubscriber/[controller]")]
     [ApiController]
     public class SubscriberController : ControllerBase
     {
@@ -18,7 +18,7 @@ namespace gRPCSubscriber.Controllers
         public IActionResult Get()
         {
             var result = _userDataClient.GetUserList();
-            return Ok( result);
+            return Ok(result);
         }
     }
 }
